@@ -86,7 +86,6 @@
       font-weight:bold;
       box-shadow:0 4px 12px rgba(0,0,0,0.3);
     }
-    /* Bouton rond thème */
     #themeToggle {
       position:fixed;
       bottom:20px;
@@ -107,7 +106,6 @@
       background:white;
     }
     #themeToggle:hover { background:#2a3750; }
-    /* Mini menu thème */
     #themeMenu {
       position:fixed;
       bottom:80px;
@@ -130,7 +128,6 @@
       cursor:pointer;
     }
     #themeMenu button:hover { filter:brightness(1.1); }
-    /* Thème clair corrigé */
     body.light {
       background:#eaeaea;
       color:#141a24;
@@ -146,53 +143,52 @@
 </head>
 <body>
 
-  <!-- Menu -->
-  <header>
-    <nav>
-      <a href="#installation">Installation</a>
-      <a href="#buttons">Boutons</a>
-      <a href="#toggles">Toggles</a>
-      <a href="#sliders">Sliders</a>
-      <a href="#dropdowns">Dropdowns</a>
-      <a href="#notifications">Notifications</a>
-      <a href="#themes">Thèmes</a>
-    </nav>
-  </header>
+<header>
+  <nav>
+    <a href="#installation">Installation</a>
+    <a href="#buttons">Boutons</a>
+    <a href="#toggles">Toggles</a>
+    <a href="#sliders">Sliders</a>
+    <a href="#dropdowns">Dropdowns</a>
+    <a href="#notifications">Notifications</a>
+    <a href="#themes">Thèmes</a>
+  </nav>
+</header>
 
-  <div class="container">
+<div class="container">
 
-    <!-- Installation -->
-    <section id="installation" class="card">
-      <h2>Installation</h2>
-      <pre id="install">
-loadstring(game:HttpGet("https://raw.githubusercontent.com/fsqddsfdqsfd/Site/refs/heads/main/test1.lua"))()
-      </pre>
-      <button onclick="copyCode('install')">Copier le code</button>
-      <h3>Résultat complet :</h3>
-      <pre>
-local GitanX = require(game.ReplicatedStorage.GitanX)
-local Library = GitanX.new():CreateWindow({
+  <!-- Installation -->
+  <section id="installation" class="card">
+    <h2>Installation</h2>
+    <pre id="install">
+local GitanX = loadstring(game:HttpGet("https://raw.githubusercontent.com/fsqddsfdqsfd/Site/refs/heads/main/test1.lua"))()
+    </pre>
+    <button onclick="copyCode('install')">Copier le code</button>
+    <h3>Résultat complet :</h3>
+    <pre>
+local Library = GitanX:CreateWindow({
     Name = "GitanX Menu",
-    LoadingTitle = "Bienvenue",
-    LoadingSubtitle = "Librairie GitanX",
     Theme = "Amethyst"
 })
 local TabGameplay = Library:CreateTab("Gameplay")
 local SecActions = TabGameplay:CreateSection("Actions")
-      </pre>
-    </section>
+    </pre>
+  </section>
 
-    <!-- Boutons -->
-    <section id="buttons" class="card">
-      <h2>Boutons</h2>
-      <pre id="button">
-Section:CreateButton("Nom du bouton", function()
-    -- votre script ici
-end)
-      </pre>
-      <button onclick="copyCode('button')">Copier le code</button>
-      <h3>Résultat complet :</h3>
-      <pre>
+  <!-- Boutons -->
+  <section id="buttons" class="card">
+    <h2>Boutons</h2>
+    <pre id="button">
+Section:CreateButton({
+    Name = "Nom du bouton",
+    Callback = function()
+        -- votre script ici
+    end
+})
+    </pre>
+    <button onclick="copyCode('button')">Copier le code</button>
+    <h3>Résultat complet :</h3>
+    <pre>
 SecActions:CreateButton({
     Name = "Boost vitesse",
     Callback = function()
@@ -200,24 +196,24 @@ SecActions:CreateButton({
         if hum then hum.WalkSpeed = 50 end
     end
 })
-      </pre>
-    </section>
+    </pre>
+  </section>
 
-    <!-- Toggles -->
-    <section id="toggles" class="card">
-      <h2>Toggles</h2>
-      <pre id="toggle">
-Section:CreateToggle("Nom du toggle", function(state)
-    if state then
-        -- votre script ici (activé)
-    else
-        -- votre script ici (désactivé)
+  <!-- Toggles -->
+  <section id="toggles" class="card">
+    <h2>Toggles</h2>
+    <pre id="toggle">
+Section:CreateToggle({
+    Name = "Nom du toggle",
+    CurrentValue = false,
+    Callback = function(state)
+        -- votre script ici
     end
-end)
-      </pre>
-      <button onclick="copyCode('toggle')">Copier le code</button>
-      <h3>Résultat complet :</h3>
-      <pre>
+})
+    </pre>
+    <button onclick="copyCode('toggle')">Copier le code</button>
+    <h3>Résultat complet :</h3>
+    <pre>
 SecActions:CreateToggle({
     Id = "InvincibleToggle",
     Name = "Mode invincible",
@@ -230,20 +226,26 @@ SecActions:CreateToggle({
         end
     end
 })
-      </pre>
-    </section>
+    </pre>
+  </section>
 
-    <!-- Sliders -->
-    <section id="sliders" class="card">
-      <h2>Sliders</h2>
-      <pre id="slider">
-Section:CreateSlider("Nom du slider", 0, 100, function(val)
-    -- votre script ici (val contient la valeur choisie)
-end)
-      </pre>
-      <button onclick="copyCode('slider')">Copier le code</button>
-      <h3>Résultat complet :</h3>
-      <pre>
+  <!-- Sliders -->
+  <section id="sliders" class="card">
+    <h2>Sliders</h2>
+    <pre id="slider">
+Section:CreateSlider({
+    Name = "Nom du slider",
+    Range = {0,100},
+    Increment = 1,
+    CurrentValue = 0,
+    Callback = function(val)
+        -- votre script ici
+    end
+})
+    </pre>
+    <button onclick="copyCode('slider')">Copier le code</button>
+    <h3>Résultat complet :</h3>
+    <pre>
 SecActions:CreateSlider({
     Id = "SpeedSlider",
     Name = "Vitesse",
@@ -255,20 +257,25 @@ SecActions:CreateSlider({
         if hum then hum.WalkSpeed = val end
     end
 })
-      </pre>
-    </section>
+    </pre>
+  </section>
 
-        <!-- Dropdowns -->
-    <section id="dropdowns" class="card">
-      <h2>Dropdowns</h2>
-      <pre id="dropdown">
-Section:CreateDropdown("Nom du dropdown", {"Option1","Option2","Option3"}, function(choice)
-    -- votre script ici (choice contient l'option choisie)
-end)
-      </pre>
-      <button onclick="copyCode('dropdown')">Copier le code</button>
-      <h3>Résultat complet :</h3>
-      <pre>
+  <!-- Dropdowns -->
+  <section id="dropdowns" class="card">
+    <h2>Dropdowns</h2>
+    <pre id="dropdown">
+Section:CreateDropdown({
+    Name = "Nom du dropdown",
+    Options = {"Option1","Option2","Option3"},
+    CurrentOption = "Option1",
+    Callback = function(choice)
+        -- votre script ici
+    end
+})
+    </pre>
+    <button onclick="copyCode('dropdown')">Copier le code</button>
+    <h3>Résultat complet :</h3>
+    <pre>
 SecActions:CreateDropdown({
     Id = "SpeedChoice",
     Name = "Choix de vitesse",
@@ -279,36 +286,41 @@ SecActions:CreateDropdown({
         if hum then hum.WalkSpeed = tonumber(choice) end
     end
 })
-      </pre>
-    </section>
+    </pre>
+  </section>
 
-    <!-- Notifications -->
-    <section id="notifications" class="card">
-      <h2>Notifications</h2>
-      <pre id="notify">
-UI:Notify("Titre", "Message de notification")
-      </pre>
-      <button onclick="copyCode('notify')">Copier le code</button>
-      <h3>Résultat complet :</h3>
-      <pre>
+  <!-- Notifications -->
+  <section id="notifications" class="card">
+    <h2>Notifications</h2>
+    <pre id="notify">
+Library:Notify({
+    Title = "Titre",
+    Content = "Message",
+    Type = "Info",
+    Duration = 3
+})
+    </pre>
+    <button onclick="copyCode('notify')">Copier le code</button>
+    <h3>Résultat complet :</h3>
+    <pre>
 Library:Notify({
     Title = "GitanX",
     Content = "Interface chargée avec succès.",
     Type = "Success",
     Duration = 3
 })
-      </pre>
-    </section>
+    </pre>
+  </section>
 
-    <!-- Thèmes -->
-    <section id="themes" class="card">
-      <h2>Changer de thème</h2>
-      <pre id="theme">
-UI:ChangeTheme("Ocean") -- Thèmes disponibles: Default, Ocean, Amethyst, Light
-      </pre>
-      <button onclick="copyCode('theme')">Copier le code</button>
-      <h3>Résultat complet :</h3>
-      <pre>
+  <!-- Thèmes -->
+  <section id="themes" class="card">
+    <h2>Changer de thème</h2>
+    <pre id="theme">
+Library:ChangeTheme("Ocean") -- Thèmes disponibles: Default, Ocean, Amethyst, Light
+    </pre>
+    <button onclick="copyCode('theme')">Copier le code</button>
+    <h3>Résultat complet :</h3>
+    <pre>
 local themeDropdown = SecActions:CreateDropdown({
     Id = "ThemeDropdown",
     Name = "Thème",
@@ -318,65 +330,65 @@ local themeDropdown = SecActions:CreateDropdown({
         Library:ChangeTheme(choice)
     end
 })
-      </pre>
-    </section>
+    </pre>
+  </section>
 
-  </div>
+</div>
 
-  <!-- Notification -->
-  <div id="notif">Code copié !</div>
+<!-- Notification -->
+<div id="notif">Code copié !</div>
 
-  <!-- Bouton rond thème -->
-  <div id="themeToggle"><div class="icon"></div></div>
+<!-- Bouton rond thème -->
+<div id="themeToggle"><div class="icon"></div></div>
 
-  <!-- Mini menu thème -->
-  <div id="themeMenu">
-    <button onclick="setTheme('dark')">🌑 Sombre</button>
-    <button onclick="setTheme('light')">☀️ Clair</button>
-    <button onclick="setTheme('auto')">⚙️ Auto</button>
-  </div>
+<!-- Mini menu thème -->
+<div id="themeMenu">
+  <button onclick="setTheme('dark')">🌑 Sombre</button>
+  <button onclick="setTheme('light')">☀️ Clair</button>
+  <button onclick="setTheme('auto')">⚙️ Auto</button>
+</div>
 
-  <script>
-    // Fonction copier le code
-    function copyCode(id){
-      const code = document.getElementById(id).innerText;
-      navigator.clipboard.writeText(code).then(()=>{
-        const notif = document.getElementById("notif");
-        notif.style.display = "block";
-        setTimeout(()=>{ notif.style.display = "none"; },2000);
-      });
-    }
-
-    // Gestion du thème
-    let mode = "dark";
-    const themeBtn = document.getElementById("themeToggle");
-    const themeMenu = document.getElementById("themeMenu");
-
-    function applyTheme(){
-      if(mode === "light"){
-        document.body.classList.add("light");
-      } else if(mode === "dark"){
-        document.body.classList.remove("light");
-      } else if(mode === "auto"){
-        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-        if(prefersLight) document.body.classList.add("light");
-        else document.body.classList.remove("light");
-      }
-    }
-
-    function setTheme(newMode){
-      mode = newMode;
-      applyTheme();
-      themeMenu.style.display = "none";
-    }
-
-    themeBtn.addEventListener("click", ()=>{
-      themeMenu.style.display = themeMenu.style.display === "flex" ? "none" : "flex";
+<script>
+  // Fonction copier le code
+  function copyCode(id){
+    const code = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(code).then(()=>{
+      const notif = document.getElementById("notif");
+      notif.style.display = "block";
+      setTimeout(()=>{ notif.style.display = "none"; },2000);
     });
+  }
 
-    // Appliquer au chargement
+  // Gestion du thème
+  let mode = "dark";
+  const themeBtn = document.getElementById("themeToggle");
+  const themeMenu = document.getElementById("themeMenu");
+
+  function applyTheme(){
+    if(mode === "light"){
+      document.body.classList.add("light");
+    } else if(mode === "dark"){
+      document.body.classList.remove("light");
+    } else if(mode === "auto"){
+      const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+      if(prefersLight) document.body.classList.add("light");
+      else document.body.classList.remove("light");
+    }
+  }
+
+  function setTheme(newMode){
+    mode = newMode;
     applyTheme();
-  </script>
+    themeMenu.style.display = "none";
+  }
+
+  themeBtn.addEventListener("click", ()=>{
+    themeMenu.style.display = themeMenu.style.display === "flex" ? "none" : "flex";
+  });
+
+  // Appliquer au chargement
+  applyTheme();
+</script>
 
 </body>
 </html>
