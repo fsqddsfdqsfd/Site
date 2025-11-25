@@ -5,95 +5,154 @@
   <title>Tutoriel GitanX UI Library</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body {
-      background:#141a24;
-      color:#eaf0ff;
-      font-family: Arial, sans-serif;
-      margin:0;
-      padding:20px;
-    }
+    body { background:#141a24; color:#eaf0ff; font-family:Arial; margin:0; }
+    header { background:#1b2330; padding:12px; position:sticky; top:0; }
+    nav a { color:#eaf0ff; margin:0 10px; text-decoration:none; }
+    nav a:hover { color:#4a8cff; }
+    .container { padding:20px; }
     h1,h2,h3 { color:#4a8cff; }
-    .card {
-      background:#1b2330;
-      border:1px solid #2a3750;
-      border-radius:12px;
-      padding:16px;
-      margin-bottom:20px;
-    }
-    pre {
-      background:#0f1520;
-      color:#e6f1ff;
-      padding:12px;
-      border-radius:8px;
-      overflow:auto;
-    }
-    button {
-      background:#4a8cff;
-      border:none;
-      color:white;
-      padding:6px 12px;
-      border-radius:6px;
-      cursor:pointer;
-    }
+    .card { background:#1b2330; border:1px solid #2a3750; border-radius:12px; padding:16px; margin-bottom:20px; }
+    pre { background:#0f1520; color:#e6f1ff; padding:12px; border-radius:8px; overflow:auto; }
+    button { background:#4a8cff; border:none; color:white; padding:6px 12px; border-radius:6px; cursor:pointer; }
     button:hover { filter:brightness(1.1); }
+    #notif { position:fixed; bottom:20px; right:20px; background:#4a8cff; color:white; padding:10px 16px; border-radius:8px; display:none; }
   </style>
 </head>
 <body>
 
-  <h1>Tutoriel GitanX UI Library</h1>
-  <p>Bienvenue ! Ce guide explique comment installer et utiliser la librairie <b>GitanX</b> pour Roblox.</p>
+  <!-- Menu -->
+  <header>
+    <nav>
+      <a href="#accueil">Accueil</a>
+      <a href="#installation">Installation</a>
+      <a href="#buttons">Boutons</a>
+      <a href="#toggles">Toggles</a>
+      <a href="#sliders">Sliders</a>
+      <a href="#dropdowns">Dropdowns</a>
+      <a href="#notifications">Notifications</a>
+      <a href="#themes">Thèmes</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
 
-  <div class="card">
-    <h2>Installation</h2>
-    <ol>
-      <li>Placez le script GitanX dans <b>ReplicatedStorage</b>.</li>
-      <li>Ajoutez un LocalScript avec le code suivant :</li>
-    </ol>
-    <pre id="install">
-local GitanX = require(game.ReplicatedStorage.GitanX)
-local UI = GitanX:CreateWindow({ Name = "Interface GitanX" })
-    </pre>
-    <button onclick="copyCode('install')">Copier le code</button>
-  </div>
+  <div class="container">
 
-  <div class="card">
-    <h2>Exemple d’utilisation</h2>
-    <pre id="example">
+    <!-- Accueil -->
+    <section id="accueil" class="card">
+      <h1>Bienvenue sur le tutoriel GitanX</h1>
+      <p>GitanX est une librairie UI moderne pour Roblox, inspirée de Rayfield, avec thèmes, onglets, contrôles et notifications.</p>
+      <p>Utilisez le menu ci-dessus pour explorer chaque fonctionnalité.</p>
+    </section>
+
+    <!-- Installation -->
+    <section id="installation" class="card">
+      <h2>Installation</h2>
+      <p>Chargez la librairie directement depuis GitHub avec <code>loadstring</code> :</p>
+      <pre id="install">
+loadstring(game:HttpGet("https://raw.githubusercontent.com/fsqddsfdqsfd/Site/refs/heads/main/test1.lua"))()
+      </pre>
+      <button onclick="copyCode('install')">Copier le code</button>
+      <p>Ensuite, créez une fenêtre :</p>
+      <pre id="window">
+local GitanX = GitanX.new()
+local UI = GitanX:CreateWindow({
+    Name = "Interface GitanX",
+    Theme = "Default"
+})
+      </pre>
+      <button onclick="copyCode('window')">Copier le code</button>
+    </section>
+
+    <!-- Boutons -->
+    <section id="buttons" class="card">
+      <h2>Boutons</h2>
+      <pre id="button">
 local Tab = UI:CreateTab("Gameplay")
 local Section = Tab:CreateSection("Actions")
 
-Section:CreateButton("Boost vitesse", function()
+Section:CreateButton({Name="Boost vitesse", Callback=function()
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
-end)
+end})
+      </pre>
+      <button onclick="copyCode('button')">Copier le code</button>
+    </section>
 
-Section:CreateToggle("Mode invincible", function(state)
+    <!-- Toggles -->
+    <section id="toggles" class="card">
+      <h2>Toggles</h2>
+      <pre id="toggle">
+Section:CreateToggle({Name="Mode invincible", Callback=function(state)
     local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
     if hum then
         hum.MaxHealth = state and math.huge or 100
         hum.Health    = state and math.huge or 100
     end
-end)
+end})
+      </pre>
+      <button onclick="copyCode('toggle')">Copier le code</button>
+    </section>
 
-UI:Notify("Info", "Interface GitanX chargée avec succès !")
-    </pre>
-    <button onclick="copyCode('example')">Copier le code</button>
+    <!-- Sliders -->
+    <section id="sliders" class="card">
+      <h2>Sliders</h2>
+      <pre id="slider">
+Section:CreateSlider({Name="Vitesse", Range={16,120}, Increment=1, Callback=function(val)
+    local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+    if hum then hum.WalkSpeed = val end
+end})
+      </pre>
+      <button onclick="copyCode('slider')">Copier le code</button>
+    </section>
+
+    <!-- Dropdowns -->
+    <section id="dropdowns" class="card">
+      <h2>Dropdowns</h2>
+      <pre id="dropdown">
+Section:CreateDropdown({Name="Choix de map", Options={"Ville","Désert","Forêt"}, Callback=function(choice)
+    print("Map choisie:", choice)
+end})
+      </pre>
+      <button onclick="copyCode('dropdown')">Copier le code</button>
+    </section>
+
+    <!-- Notifications -->
+    <section id="notifications" class="card">
+      <h2>Notifications</h2>
+      <pre id="notify">
+UI:Notify({Title="Info", Content="Interface GitanX chargée avec succès !", Type="Info", Duration=3})
+      </pre>
+      <button onclick="copyCode('notify')">Copier le code</button>
+    </section>
+
+    <!-- Thèmes -->
+    <section id="themes" class="card">
+      <h2>Changer de thème</h2>
+      <pre id="theme">
+UI:ChangeTheme("Ocean") -- Thèmes disponibles: Default, Ocean, Amethyst, Light
+      </pre>
+      <button onclick="copyCode('theme')">Copier le code</button>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="card">
+      <h2>FAQ</h2>
+      <p><b>Q :</b> Comment charger GitanX ?<br><b>R :</b> Avec <code>loadstring(game:HttpGet(...))()</code>.</p>
+      <p><b>Q :</b> Quels contrôles sont disponibles ?<br><b>R :</b> Boutons, Toggles, Sliders, Dropdowns, Keybinds, Notifications.</p>
+      <p><b>Q :</b> Peut-on changer le thème ?<br><b>R :</b> Oui, avec <code>UI:ChangeTheme("Ocean")</code> ou autres thèmes.</p>
+    </section>
+
   </div>
 
-  <div class="card">
-    <h2>FAQ</h2>
-    <p><b>Q :</b> Peut-on changer le thème ?<br>
-       <b>R :</b> Non, le thème est imposé pour garder un style cohérent.</p>
-    <p><b>Q :</b> Où placer la librairie GitanX ?<br>
-       <b>R :</b> Dans un ModuleScript, par exemple dans ReplicatedStorage.</p>
-    <p><b>Q :</b> Est-ce que GitanX fonctionne dans Roblox Studio ?<br>
-       <b>R :</b> Oui, vous pouvez tester directement vos interfaces dans Studio.</p>
-  </div>
+  <!-- Notification -->
+  <div id="notif">Code copié !</div>
 
   <script>
     function copyCode(id){
       const code = document.getElementById(id).innerText;
       navigator.clipboard.writeText(code).then(()=>{
-        alert("Code copié !");
+        const notif = document.getElementById("notif");
+        notif.style.display = "block";
+        setTimeout(()=>{ notif.style.display = "none"; },2000);
       });
     }
   </script>
