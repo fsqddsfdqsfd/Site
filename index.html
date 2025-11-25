@@ -5,17 +5,86 @@
   <title>Tutoriel GitanX UI Library</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { background:#141a24; color:#eaf0ff; font-family:Arial; margin:0; }
-    header { background:#1b2330; padding:12px; position:sticky; top:0; }
-    nav a { color:#eaf0ff; margin:0 10px; text-decoration:none; }
-    nav a:hover { color:#4a8cff; }
-    .container { padding:20px; }
-    h1,h2,h3 { color:#4a8cff; }
-    .card { background:#1b2330; border:1px solid #2a3750; border-radius:12px; padding:16px; margin-bottom:20px; }
-    pre { background:#0f1520; color:#e6f1ff; padding:12px; border-radius:8px; overflow:auto; }
-    button { background:#4a8cff; border:none; color:white; padding:6px 12px; border-radius:6px; cursor:pointer; }
+    body {
+      background:#141a24;
+      color:#eaf0ff;
+      font-family:Arial, sans-serif;
+      margin:0;
+      line-height:1.7;
+    }
+    header {
+      background:#1b2330;
+      padding:20px;
+      position:sticky;
+      top:0;
+      z-index:1000;
+    }
+    nav {
+      display:flex;
+      flex-wrap:wrap;
+      gap:20px;
+      justify-content:center;
+    }
+    nav a {
+      color:#eaf0ff;
+      text-decoration:none;
+      font-weight:bold;
+      padding:8px 14px;
+      border-radius:6px;
+      transition:background 0.3s;
+    }
+    nav a:hover {
+      background:#2a3750;
+      color:#4a8cff;
+    }
+    .container {
+      max-width:900px;
+      margin:0 auto;
+      padding:40px 20px;
+    }
+    h1,h2,h3 {
+      color:#4a8cff;
+      margin-bottom:15px;
+    }
+    .card {
+      background:#1b2330;
+      border:1px solid #2a3750;
+      border-radius:12px;
+      padding:30px;
+      margin-bottom:40px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    }
+    pre {
+      background:#0f1520;
+      color:#e6f1ff;
+      padding:16px;
+      border-radius:8px;
+      overflow:auto;
+      margin-top:15px;
+      margin-bottom:20px;
+    }
+    button {
+      background:#4a8cff;
+      border:none;
+      color:white;
+      padding:8px 16px;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:bold;
+    }
     button:hover { filter:brightness(1.1); }
-    #notif { position:fixed; bottom:20px; right:20px; background:#4a8cff; color:white; padding:10px 16px; border-radius:8px; display:none; }
+    #notif {
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      background:#4a8cff;
+      color:white;
+      padding:12px 18px;
+      border-radius:8px;
+      display:none;
+      font-weight:bold;
+      box-shadow:0 4px 12px rgba(0,0,0,0.3);
+    }
   </style>
 </head>
 <body>
@@ -40,8 +109,7 @@
     <!-- Accueil -->
     <section id="accueil" class="card">
       <h1>Bienvenue sur le tutoriel GitanX</h1>
-      <p>GitanX est une librairie UI moderne pour Roblox, inspirée de Rayfield, avec thèmes, onglets, contrôles et notifications.</p>
-      <p>Utilisez le menu ci-dessus pour explorer chaque fonctionnalité.</p>
+      <p>GitanX est une librairie UI moderne pour Roblox. Ce site vous guide pas à pas pour l’utiliser en jeu.</p>
     </section>
 
     <!-- Installation -->
@@ -66,13 +134,11 @@ local UI = GitanX:CreateWindow({
     <!-- Boutons -->
     <section id="buttons" class="card">
       <h2>Boutons</h2>
+      <p>Un bouton exécute une action quand on clique dessus :</p>
       <pre id="button">
-local Tab = UI:CreateTab("Gameplay")
-local Section = Tab:CreateSection("Actions")
-
-Section:CreateButton({Name="Boost vitesse", Callback=function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
-end})
+Section:CreateButton("Nom du bouton", function()
+    -- votre script ici
+end)
       </pre>
       <button onclick="copyCode('button')">Copier le code</button>
     </section>
@@ -80,14 +146,15 @@ end})
     <!-- Toggles -->
     <section id="toggles" class="card">
       <h2>Toggles</h2>
+      <p>Un toggle permet d’activer/désactiver une fonction :</p>
       <pre id="toggle">
-Section:CreateToggle({Name="Mode invincible", Callback=function(state)
-    local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-    if hum then
-        hum.MaxHealth = state and math.huge or 100
-        hum.Health    = state and math.huge or 100
+Section:CreateToggle("Nom du toggle", function(state)
+    if state then
+        -- votre script ici (activé)
+    else
+        -- votre script ici (désactivé)
     end
-end})
+end)
       </pre>
       <button onclick="copyCode('toggle')">Copier le code</button>
     </section>
@@ -95,11 +162,11 @@ end})
     <!-- Sliders -->
     <section id="sliders" class="card">
       <h2>Sliders</h2>
+      <p>Un slider permet de choisir une valeur numérique :</p>
       <pre id="slider">
-Section:CreateSlider({Name="Vitesse", Range={16,120}, Increment=1, Callback=function(val)
-    local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-    if hum then hum.WalkSpeed = val end
-end})
+Section:CreateSlider("Nom du slider", 0, 100, function(val)
+    -- votre script ici (val contient la valeur choisie)
+end)
       </pre>
       <button onclick="copyCode('slider')">Copier le code</button>
     </section>
@@ -107,10 +174,11 @@ end})
     <!-- Dropdowns -->
     <section id="dropdowns" class="card">
       <h2>Dropdowns</h2>
+      <p>Un dropdown permet de choisir une option :</p>
       <pre id="dropdown">
-Section:CreateDropdown({Name="Choix de map", Options={"Ville","Désert","Forêt"}, Callback=function(choice)
-    print("Map choisie:", choice)
-end})
+Section:CreateDropdown("Nom du dropdown", {"Option1","Option2","Option3"}, function(choice)
+    -- votre script ici (choice contient l'option choisie)
+end)
       </pre>
       <button onclick="copyCode('dropdown')">Copier le code</button>
     </section>
@@ -118,8 +186,9 @@ end})
     <!-- Notifications -->
     <section id="notifications" class="card">
       <h2>Notifications</h2>
+      <p>Affiche une notification à l’écran :</p>
       <pre id="notify">
-UI:Notify({Title="Info", Content="Interface GitanX chargée avec succès !", Type="Info", Duration=3})
+UI:Notify("Titre", "Message de notification")
       </pre>
       <button onclick="copyCode('notify')">Copier le code</button>
     </section>
@@ -127,6 +196,7 @@ UI:Notify({Title="Info", Content="Interface GitanX chargée avec succès !", Typ
     <!-- Thèmes -->
     <section id="themes" class="card">
       <h2>Changer de thème</h2>
+      <p>Vous pouvez changer le thème de l’interface :</p>
       <pre id="theme">
 UI:ChangeTheme("Ocean") -- Thèmes disponibles: Default, Ocean, Amethyst, Light
       </pre>
@@ -137,8 +207,8 @@ UI:ChangeTheme("Ocean") -- Thèmes disponibles: Default, Ocean, Amethyst, Light
     <section id="faq" class="card">
       <h2>FAQ</h2>
       <p><b>Q :</b> Comment charger GitanX ?<br><b>R :</b> Avec <code>loadstring(game:HttpGet(...))()</code>.</p>
-      <p><b>Q :</b> Quels contrôles sont disponibles ?<br><b>R :</b> Boutons, Toggles, Sliders, Dropdowns, Keybinds, Notifications.</p>
-      <p><b>Q :</b> Peut-on changer le thème ?<br><b>R :</b> Oui, avec <code>UI:ChangeTheme("Ocean")</code> ou autres thèmes.</p>
+      <p><b>Q :</b> Quels contrôles sont disponibles ?<br><b>R :</b> Boutons, Toggles, Sliders, Dropdowns, Notifications, Thèmes.</p>
+      <p><b>Q :</b> Est-ce que ça marche en jeu ?<br><b>R :</b> Oui, GitanX est conçu pour être exécuté directement dans Roblox.</p>
     </section>
 
   </div>
