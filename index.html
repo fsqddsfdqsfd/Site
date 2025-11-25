@@ -166,6 +166,7 @@ local GitanX = loadstring(game:HttpGet("https://raw.githubusercontent.com/fsqdds
     <button onclick="copyCode('install')">Copier le code</button>
     <h3>Résultat complet :</h3>
     <pre>
+local GitanX = loadstring(game:HttpGet("https://raw.githubusercontent.com/fsqddsfdqsfd/Site/refs/heads/main/test1.lua"))()
 local Library = GitanX:CreateWindow({
     Name = "GitanX Menu",
     Theme = "Amethyst"
@@ -189,7 +190,7 @@ Section:CreateButton({
     <button onclick="copyCode('button')">Copier le code</button>
     <h3>Résultat complet :</h3>
     <pre>
-SecActions:CreateButton({
+Section:CreateButton({
     Name = "Boost vitesse",
     Callback = function()
         local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
@@ -214,7 +215,7 @@ Section:CreateToggle({
     <button onclick="copyCode('toggle')">Copier le code</button>
     <h3>Résultat complet :</h3>
     <pre>
-SecActions:CreateToggle({
+Section:CreateToggle({
     Id = "InvincibleToggle",
     Name = "Mode invincible",
     CurrentValue = false,
@@ -246,7 +247,7 @@ Section:CreateSlider({
     <button onclick="copyCode('slider')">Copier le code</button>
     <h3>Résultat complet :</h3>
     <pre>
-SecActions:CreateSlider({
+Section:CreateSlider({
     Id = "SpeedSlider",
     Name = "Vitesse",
     Range = {16, 120},
@@ -276,7 +277,7 @@ Section:CreateDropdown({
     <button onclick="copyCode('dropdown')">Copier le code</button>
     <h3>Résultat complet :</h3>
     <pre>
-SecActions:CreateDropdown({
+Section:CreateDropdown({
     Id = "SpeedChoice",
     Name = "Choix de vitesse",
     Options = {"16","50","100"},
