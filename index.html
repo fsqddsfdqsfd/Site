@@ -5,18 +5,117 @@
   <title>Tutoriel GitanX UI Library</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { background:#141a24; color:#eaf0ff; font-family:Arial, sans-serif; margin:0; line-height:1.7; }
-    header { background:#1b2330; padding:20px; position:sticky; top:0; z-index:1000; }
-    nav { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
-    nav a { color:#eaf0ff; text-decoration:none; font-weight:bold; padding:8px 14px; border-radius:6px; transition:background 0.3s; }
-    nav a:hover { background:#2a3750; color:#4a8cff; }
-    .container { max-width:900px; margin:0 auto; padding:40px 20px; }
-    h1,h2,h3 { color:#4a8cff; margin-bottom:15px; }
-    .card { background:#1b2330; border:1px solid #2a3750; border-radius:12px; padding:30px; margin-bottom:40px; box-shadow:0 6px 20px rgba(0,0,0,0.3); }
-    pre { background:#0f1520; color:#e6f1ff; padding:16px; border-radius:8px; overflow:auto; margin-top:15px; margin-bottom:20px; }
-    button { background:#4a8cff; border:none; color:white; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:bold; }
+    body {
+      background:#141a24;
+      color:#eaf0ff;
+      font-family:Arial, sans-serif;
+      margin:0;
+      line-height:1.7;
+      transition:background 0.3s, color 0.3s;
+    }
+    header {
+      background:#1b2330;
+      padding:20px;
+      position:sticky;
+      top:0;
+      z-index:1000;
+    }
+    nav {
+      display:flex;
+      flex-wrap:wrap;
+      gap:20px;
+      justify-content:center;
+    }
+    nav a {
+      color:#eaf0ff;
+      text-decoration:none;
+      font-weight:bold;
+      padding:8px 14px;
+      border-radius:6px;
+      transition:background 0.3s;
+    }
+    nav a:hover {
+      background:#2a3750;
+      color:#4a8cff;
+    }
+    .container {
+      max-width:900px;
+      margin:0 auto;
+      padding:40px 20px;
+    }
+    h1,h2,h3 {
+      color:#4a8cff;
+      margin-bottom:15px;
+    }
+    .card {
+      background:#1b2330;
+      border:1px solid #2a3750;
+      border-radius:12px;
+      padding:30px;
+      margin-bottom:40px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    }
+    pre {
+      background:#0f1520;
+      color:#e6f1ff;
+      padding:16px;
+      border-radius:8px;
+      overflow:auto;
+      margin-top:15px;
+      margin-bottom:20px;
+    }
+    button {
+      background:#4a8cff;
+      border:none;
+      color:white;
+      padding:8px 16px;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:bold;
+    }
     button:hover { filter:brightness(1.1); }
-    #notif { position:fixed; bottom:20px; right:20px; background:#4a8cff; color:white; padding:12px 18px; border-radius:8px; display:none; font-weight:bold; box-shadow:0 4px 12px rgba(0,0,0,0.3); }
+    #notif {
+      position:fixed;
+      bottom:80px;
+      right:20px;
+      background:#4a8cff;
+      color:white;
+      padding:12px 18px;
+      border-radius:8px;
+      display:none;
+      font-weight:bold;
+      box-shadow:0 4px 12px rgba(0,0,0,0.3);
+    }
+    /* Bouton rond thème */
+    #themeToggle {
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      width:50px;
+      height:50px;
+      border-radius:50%;
+      background:#4a8cff;
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      box-shadow:0 4px 12px rgba(0,0,0,0.3);
+      font-size:20px;
+      transition:background 0.3s;
+    }
+    #themeToggle:hover { background:#2a3750; }
+    /* Thème clair */
+    body.light {
+      background:#f5f5f5;
+      color:#141a24;
+    }
+    body.light .card {
+      background:#ffffff;
+      color:#141a24;
+    }
+    body.light nav a { color:#141a24; }
+    body.light nav a:hover { background:#ddd; color:#4a8cff; }
   </style>
 </head>
 <body>
@@ -157,23 +256,4 @@ UI:ChangeTheme("Ocean") -- Thèmes disponibles: Default, Ocean, Amethyst, Light
       <pre>
 UI:ChangeTheme("Amethyst")
       </pre>
-    </section>
-
-  </div>
-
-  <!-- Notification -->
-  <div id="notif">Code copié !</div>
-
-  <script>
-    function copyCode(id){
-      const code = document.getElementById(id).innerText;
-      navigator.clipboard.writeText(code).then(()=>{
-        const notif = document.getElementById("notif");
-        notif.style.display = "block";
-        setTimeout(()=>{ notif.style.display = "none"; },2000);
-      });
-    }
-  </script>
-
-</body>
-</html>
+    </section
