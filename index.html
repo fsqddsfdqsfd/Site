@@ -130,14 +130,15 @@
       cursor:pointer;
     }
     #themeMenu button:hover { filter:brightness(1.1); }
-    /* Thème clair */
+    /* Thème clair corrigé */
     body.light {
-      background:#f5f5f5;
+      background:#eaeaea;
       color:#141a24;
     }
     body.light .card {
-      background:#ffffff;
+      background:#f9f9f9;
       color:#141a24;
+      border:1px solid #ccc;
     }
     body.light nav a { color:#141a24; }
     body.light nav a:hover { background:#ddd; color:#4a8cff; }
@@ -169,13 +170,15 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/fsqddsfdqsfd/Site/ref
       <button onclick="copyCode('install')">Copier le code</button>
       <h3>Résultat complet :</h3>
       <pre>
-local GitanX = loadstring(game:HttpGet("https://raw.githubusercontent.com/fsqddsfdqsfd/Site/refs/heads/main/test1.lua"))()
-local UI = GitanX:CreateWindow({
-    Name = "Interface GitanX",
-    Theme = "Default"
+local GitanX = require(game.ReplicatedStorage.GitanX)
+local Library = GitanX.new():CreateWindow({
+    Name = "GitanX Menu",
+    LoadingTitle = "Bienvenue",
+    LoadingSubtitle = "Librairie GitanX",
+    Theme = "Amethyst"
 })
-local Tab = UI:CreateTab("Exemple")
-local Section = Tab:CreateSection("Test")
+local TabGameplay = Library:CreateTab("Gameplay")
+local SecActions = TabGameplay:CreateSection("Actions")
       </pre>
     </section>
 
@@ -190,9 +193,13 @@ end)
       <button onclick="copyCode('button')">Copier le code</button>
       <h3>Résultat complet :</h3>
       <pre>
-Section:CreateButton("Boost vitesse", function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
-end)
+SecActions:CreateButton({
+    Name = "Boost vitesse",
+    Callback = function()
+        local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if hum then hum.WalkSpeed = 50 end
+    end
+})
       </pre>
     </section>
 
@@ -211,13 +218,18 @@ end)
       <button onclick="copyCode('toggle')">Copier le code</button>
       <h3>Résultat complet :</h3>
       <pre>
-Section:CreateToggle("Mode invincible", function(state)
-    local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-    if hum then
-        hum.MaxHealth = state and math.huge or 100
-        hum.Health    = state and math.huge or 100
+SecActions:CreateToggle({
+    Id = "InvincibleToggle",
+    Name = "Mode invincible",
+    CurrentValue = false,
+    Callback = function(state)
+        local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if hum then
+            hum.MaxHealth = state and math.huge or 100
+            hum.Health    = state and math.huge or 100
+        end
     end
-end)
+})
       </pre>
     </section>
 
@@ -232,14 +244,21 @@ end)
       <button onclick="copyCode('slider')">Copier le code</button>
       <h3>Résultat complet :</h3>
       <pre>
-Section:CreateSlider("Vitesse", 16, 120, function(val)
-    local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-    if hum then hum.WalkSpeed = val end
-end)
+SecActions:CreateSlider({
+    Id = "SpeedSlider",
+    Name = "Vitesse",
+    Range = {16, 120},
+    Increment = 1,
+    CurrentValue = 16,
+    Callback = function(val)
+        local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if hum then hum.WalkSpeed = val end
+    end
+})
       </pre>
     </section>
 
-    <!-- Dropdowns -->
+        <!-- Dropdowns -->
     <section id="dropdowns" class="card">
       <h2>Dropdowns</h2>
       <pre id="dropdown">
@@ -250,14 +269,20 @@ end)
       <button onclick="copyCode('dropdown')">Copier le code</button>
       <h3>Résultat complet :</h3>
       <pre>
-Section:CreateDropdown("Choix de vitesse", {"16","50","100"}, function(choice)
-    local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-    if hum then hum.WalkSpeed = tonumber(choice) end
-end)
+local themeDropdown = SecActions:CreateDropdown({
+    Id = "ThemeDropdown",
+    Name = "Choix de vitesse",
+    Options = {"16","50","100"},
+    CurrentOption = "16",
+    Callback = function(choice)
+        local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if hum then hum.WalkSpeed = tonumber(choice) end
+    end
+})
       </pre>
     </section>
 
-        <!-- Notifications -->
+    <!-- Notifications -->
     <section id="notifications" class="card">
       <h2>Notifications</h2>
       <pre id="notify">
@@ -266,7 +291,12 @@ UI:Notify("Titre", "Message de notification")
       <button onclick="copyCode('notify')">Copier le code</button>
       <h3>Résultat complet :</h3>
       <pre>
-UI:Notify("Info", "Interface GitanX chargée avec succès !")
+Library:Notify({
+    Title = "GitanX",
+    Content = "Interface chargée avec succès.",
+    Type = "Success",
+    Duration = 3
+})
       </pre>
     </section>
 
@@ -279,7 +309,15 @@ UI:ChangeTheme("Ocean") -- Thèmes disponibles: Default, Ocean, Amethyst, Light
       <button onclick="copyCode('theme')">Copier le code</button>
       <h3>Résultat complet :</h3>
       <pre>
-UI:ChangeTheme("Amethyst")
+local themeDropdown = SecActions:CreateDropdown({
+    Id = "ThemeDropdown",
+    Name = "Thème",
+    Options = {"Default","Ocean","Amethyst","Light"},
+    CurrentOption = "Amethyst",
+    Callback = function(choice)
+        Library:ChangeTheme(choice)
+    end
+})
       </pre>
     </section>
 
