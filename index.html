@@ -257,3 +257,58 @@ UI:ChangeTheme("Ocean") -- Thèmes disponibles: Default, Ocean, Amethyst, Light
 UI:ChangeTheme("Amethyst")
       </pre>
     </section
+        </div>
+
+  <!-- Notification -->
+  <div id="notif">Code copié !</div>
+
+  <!-- Bouton rond thème -->
+  <div id="themeToggle">☀️</div>
+
+  <script>
+    // Fonction copier le code
+    function copyCode(id){
+      const code = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(code).then(()=>{
+        const notif = document.getElementById("notif");
+        notif.style.display = "block";
+        setTimeout(()=>{ notif.style.display = "none"; },2000);
+      });
+    }
+
+    // Gestion du thème
+    const themeBtn = document.getElementById("themeToggle");
+    let mode = "dark"; // valeurs possibles : dark, light, auto
+
+    function applyTheme(){
+      if(mode === "light"){
+        document.body.classList.add("light");
+        themeBtn.textContent = "🌙";
+      } else if(mode === "dark"){
+        document.body.classList.remove("light");
+        themeBtn.textContent = "☀️";
+      } else if(mode === "auto"){
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if(prefersLight){
+          document.body.classList.add("light");
+          themeBtn.textContent = "🌙";
+        } else {
+          document.body.classList.remove("light");
+          themeBtn.textContent = "☀️";
+        }
+      }
+    }
+
+    themeBtn.addEventListener("click", ()=>{
+      if(mode === "dark") mode = "light";
+      else if(mode === "light") mode = "auto";
+      else mode = "dark";
+      applyTheme();
+    });
+
+    // Appliquer au chargement
+    applyTheme();
+  </script>
+
+</body>
+</html>
