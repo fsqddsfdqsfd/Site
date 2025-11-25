@@ -57,7 +57,7 @@
     }
     pre {
       background:#0f1520;
-      color:#e6f1ff;
+      color:#eaf0ff;
       padding:16px;
       border-radius:8px;
       overflow:auto;
@@ -76,7 +76,7 @@
     button:hover { filter:brightness(1.1); }
     #notif {
       position:fixed;
-      bottom:80px;
+      bottom:120px;
       right:20px;
       background:#4a8cff;
       color:white;
@@ -95,16 +95,41 @@
       height:50px;
       border-radius:50%;
       background:#4a8cff;
-      color:white;
       display:flex;
       align-items:center;
       justify-content:center;
       cursor:pointer;
       box-shadow:0 4px 12px rgba(0,0,0,0.3);
-      font-size:20px;
-      transition:background 0.3s;
+    }
+    #themeToggle .icon {
+      width:20px; height:20px;
+      border-radius:50%;
+      background:white;
     }
     #themeToggle:hover { background:#2a3750; }
+    /* Mini menu thème */
+    #themeMenu {
+      position:fixed;
+      bottom:80px;
+      right:20px;
+      background:#1b2330;
+      border:1px solid #2a3750;
+      border-radius:8px;
+      padding:10px;
+      display:none;
+      flex-direction:column;
+      gap:8px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.3);
+    }
+    #themeMenu button {
+      background:#4a8cff;
+      border:none;
+      color:white;
+      padding:6px 12px;
+      border-radius:6px;
+      cursor:pointer;
+    }
+    #themeMenu button:hover { filter:brightness(1.1); }
     /* Thème clair */
     body.light {
       background:#f5f5f5;
@@ -232,7 +257,7 @@ end)
       </pre>
     </section>
 
-    <!-- Notifications -->
+        <!-- Notifications -->
     <section id="notifications" class="card">
       <h2>Notifications</h2>
       <pre id="notify">
@@ -256,14 +281,22 @@ UI:ChangeTheme("Ocean") -- Thèmes disponibles: Default, Ocean, Amethyst, Light
       <pre>
 UI:ChangeTheme("Amethyst")
       </pre>
-    </section
-        </div>
+    </section>
+
+  </div>
 
   <!-- Notification -->
   <div id="notif">Code copié !</div>
 
   <!-- Bouton rond thème -->
-  <div id="themeToggle">☀️</div>
+  <div id="themeToggle"><div class="icon"></div></div>
+
+  <!-- Mini menu thème -->
+  <div id="themeMenu">
+    <button onclick="setTheme('dark')">🌑 Sombre</button>
+    <button onclick="setTheme('light')">☀️ Clair</button>
+    <button onclick="setTheme('auto')">⚙️ Auto</button>
+  </div>
 
   <script>
     // Fonction copier le code
@@ -277,33 +310,30 @@ UI:ChangeTheme("Amethyst")
     }
 
     // Gestion du thème
+    let mode = "dark";
     const themeBtn = document.getElementById("themeToggle");
-    let mode = "dark"; // valeurs possibles : dark, light, auto
+    const themeMenu = document.getElementById("themeMenu");
 
     function applyTheme(){
       if(mode === "light"){
         document.body.classList.add("light");
-        themeBtn.textContent = "🌙";
       } else if(mode === "dark"){
         document.body.classList.remove("light");
-        themeBtn.textContent = "☀️";
       } else if(mode === "auto"){
         const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-        if(prefersLight){
-          document.body.classList.add("light");
-          themeBtn.textContent = "🌙";
-        } else {
-          document.body.classList.remove("light");
-          themeBtn.textContent = "☀️";
-        }
+        if(prefersLight) document.body.classList.add("light");
+        else document.body.classList.remove("light");
       }
     }
 
-    themeBtn.addEventListener("click", ()=>{
-      if(mode === "dark") mode = "light";
-      else if(mode === "light") mode = "auto";
-      else mode = "dark";
+    function setTheme(newMode){
+      mode = newMode;
       applyTheme();
+      themeMenu.style.display = "none";
+    }
+
+    themeBtn.addEventListener("click", ()=>{
+      themeMenu.style.display = themeMenu.style.display === "flex" ? "none" : "flex";
     });
 
     // Appliquer au chargement
