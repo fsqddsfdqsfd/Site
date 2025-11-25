@@ -5,86 +5,18 @@
   <title>Tutoriel GitanX UI Library</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body {
-      background:#141a24;
-      color:#eaf0ff;
-      font-family:Arial, sans-serif;
-      margin:0;
-      line-height:1.7;
-    }
-    header {
-      background:#1b2330;
-      padding:20px;
-      position:sticky;
-      top:0;
-      z-index:1000;
-    }
-    nav {
-      display:flex;
-      flex-wrap:wrap;
-      gap:20px;
-      justify-content:center;
-    }
-    nav a {
-      color:#eaf0ff;
-      text-decoration:none;
-      font-weight:bold;
-      padding:8px 14px;
-      border-radius:6px;
-      transition:background 0.3s;
-    }
-    nav a:hover {
-      background:#2a3750;
-      color:#4a8cff;
-    }
-    .container {
-      max-width:900px;
-      margin:0 auto;
-      padding:40px 20px;
-    }
-    h1,h2,h3 {
-      color:#4a8cff;
-      margin-bottom:15px;
-    }
-    .card {
-      background:#1b2330;
-      border:1px solid #2a3750;
-      border-radius:12px;
-      padding:30px;
-      margin-bottom:40px;
-      box-shadow:0 6px 20px rgba(0,0,0,0.3);
-    }
-    pre {
-      background:#0f1520;
-      color:#e6f1ff;
-      padding:16px;
-      border-radius:8px;
-      overflow:auto;
-      margin-top:15px;
-      margin-bottom:20px;
-    }
-    button {
-      background:#4a8cff;
-      border:none;
-      color:white;
-      padding:8px 16px;
-      border-radius:6px;
-      cursor:pointer;
-      font-weight:bold;
-    }
+    body { background:#141a24; color:#eaf0ff; font-family:Arial, sans-serif; margin:0; line-height:1.7; }
+    header { background:#1b2330; padding:20px; position:sticky; top:0; z-index:1000; }
+    nav { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+    nav a { color:#eaf0ff; text-decoration:none; font-weight:bold; padding:8px 14px; border-radius:6px; transition:background 0.3s; }
+    nav a:hover { background:#2a3750; color:#4a8cff; }
+    .container { max-width:900px; margin:0 auto; padding:40px 20px; }
+    h1,h2,h3 { color:#4a8cff; margin-bottom:15px; }
+    .card { background:#1b2330; border:1px solid #2a3750; border-radius:12px; padding:30px; margin-bottom:40px; box-shadow:0 6px 20px rgba(0,0,0,0.3); }
+    pre { background:#0f1520; color:#e6f1ff; padding:16px; border-radius:8px; overflow:auto; margin-top:15px; margin-bottom:20px; }
+    button { background:#4a8cff; border:none; color:white; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:bold; }
     button:hover { filter:brightness(1.1); }
-    #notif {
-      position:fixed;
-      bottom:20px;
-      right:20px;
-      background:#4a8cff;
-      color:white;
-      padding:12px 18px;
-      border-radius:8px;
-      display:none;
-      font-weight:bold;
-      box-shadow:0 4px 12px rgba(0,0,0,0.3);
-    }
+    #notif { position:fixed; bottom:20px; right:20px; background:#4a8cff; color:white; padding:12px 18px; border-radius:8px; display:none; font-weight:bold; box-shadow:0 4px 12px rgba(0,0,0,0.3); }
   </style>
 </head>
 <body>
@@ -115,38 +47,38 @@
     <!-- Installation -->
     <section id="installation" class="card">
       <h2>Installation</h2>
-      <p>Chargez la librairie directement depuis GitHub avec <code>loadstring</code> :</p>
       <pre id="install">
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fsqddsfdqsfd/Site/refs/heads/main/test1.lua"))()
       </pre>
       <button onclick="copyCode('install')">Copier le code</button>
-      <p>Ensuite, créez une fenêtre :</p>
-      <pre id="window">
-local GitanX = GitanX.new()
-local UI = GitanX:CreateWindow({
-    Name = "Interface GitanX",
-    Theme = "Default"
-})
+      <h3>Résultat :</h3>
+      <pre>
+-- Ce script charge la librairie GitanX
+-- Une fenêtre s’ouvre automatiquement avec le thème par défaut
       </pre>
-      <button onclick="copyCode('window')">Copier le code</button>
     </section>
 
     <!-- Boutons -->
     <section id="buttons" class="card">
       <h2>Boutons</h2>
-      <p>Un bouton exécute une action quand on clique dessus :</p>
       <pre id="button">
 Section:CreateButton("Nom du bouton", function()
     -- votre script ici
 end)
       </pre>
       <button onclick="copyCode('button')">Copier le code</button>
+      <h3>Résultat :</h3>
+      <pre>
+Section:CreateButton("Dire Bonjour", function()
+    game:GetService("Players").LocalPlayer:Kick("Bonjour depuis GitanX !")
+end)
+-- Quand vous cliquez, le joueur est expulsé avec un message
+      </pre>
     </section>
 
     <!-- Toggles -->
     <section id="toggles" class="card">
       <h2>Toggles</h2>
-      <p>Un toggle permet d’activer/désactiver une fonction :</p>
       <pre id="toggle">
 Section:CreateToggle("Nom du toggle", function(state)
     if state then
@@ -157,50 +89,84 @@ Section:CreateToggle("Nom du toggle", function(state)
 end)
       </pre>
       <button onclick="copyCode('toggle')">Copier le code</button>
+      <h3>Résultat :</h3>
+      <pre>
+Section:CreateToggle("Mode invisible", function(state)
+    local char = game.Players.LocalPlayer.Character
+    if char then
+        char.Head.Transparency = state and 1 or 0
+    end
+end)
+-- Active/désactive la transparence de la tête du joueur
+      </pre>
     </section>
 
     <!-- Sliders -->
     <section id="sliders" class="card">
       <h2>Sliders</h2>
-      <p>Un slider permet de choisir une valeur numérique :</p>
       <pre id="slider">
 Section:CreateSlider("Nom du slider", 0, 100, function(val)
     -- votre script ici (val contient la valeur choisie)
 end)
       </pre>
       <button onclick="copyCode('slider')">Copier le code</button>
+      <h3>Résultat :</h3>
+      <pre>
+Section:CreateSlider("Taille du joueur", 1, 5, function(val)
+    local char = game.Players.LocalPlayer.Character
+    if char then
+        char:SetPrimaryPartCFrame(char.PrimaryPart.CFrame * CFrame.new(0,0,0) * CFrame.Angles(0,0,0))
+        char.PrimaryPart.Size = Vector3.new(val,val,val)
+    end
+end)
+-- Permet de régler la taille du joueur entre 1 et 5
+      </pre>
     </section>
 
     <!-- Dropdowns -->
     <section id="dropdowns" class="card">
       <h2>Dropdowns</h2>
-      <p>Un dropdown permet de choisir une option :</p>
       <pre id="dropdown">
 Section:CreateDropdown("Nom du dropdown", {"Option1","Option2","Option3"}, function(choice)
     -- votre script ici (choice contient l'option choisie)
 end)
       </pre>
       <button onclick="copyCode('dropdown')">Copier le code</button>
+      <h3>Résultat :</h3>
+      <pre>
+Section:CreateDropdown("Choisir une couleur", {"Rouge","Vert","Bleu"}, function(choice)
+    print("Couleur choisie:", choice)
+end)
+-- Affiche dans la console la couleur sélectionnée
+      </pre>
     </section>
 
     <!-- Notifications -->
     <section id="notifications" class="card">
       <h2>Notifications</h2>
-      <p>Affiche une notification à l’écran :</p>
       <pre id="notify">
 UI:Notify("Titre", "Message de notification")
       </pre>
       <button onclick="copyCode('notify')">Copier le code</button>
+      <h3>Résultat :</h3>
+      <pre>
+UI:Notify("Info", "Bienvenue dans GitanX !")
+-- Affiche une notification en jeu
+      </pre>
     </section>
 
     <!-- Thèmes -->
     <section id="themes" class="card">
       <h2>Changer de thème</h2>
-      <p>Vous pouvez changer le thème de l’interface :</p>
       <pre id="theme">
 UI:ChangeTheme("Ocean") -- Thèmes disponibles: Default, Ocean, Amethyst, Light
       </pre>
       <button onclick="copyCode('theme')">Copier le code</button>
+      <h3>Résultat :</h3>
+      <pre>
+UI:ChangeTheme("Amethyst")
+-- Change le thème de l’interface en violet
+      </pre>
     </section>
 
     <!-- FAQ -->
@@ -214,18 +180,4 @@ UI:ChangeTheme("Ocean") -- Thèmes disponibles: Default, Ocean, Amethyst, Light
   </div>
 
   <!-- Notification -->
-  <div id="notif">Code copié !</div>
-
-  <script>
-    function copyCode(id){
-      const code = document.getElementById(id).innerText;
-      navigator.clipboard.writeText(code).then(()=>{
-        const notif = document.getElementById("notif");
-        notif.style.display = "block";
-        setTimeout(()=>{ notif.style.display = "none"; },2000);
-      });
-    }
-  </script>
-
-</body>
-</html>
+  <div id="notif">Code copié
