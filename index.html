@@ -24,7 +24,6 @@
   <!-- Menu -->
   <header>
     <nav>
-      <a href="#accueil">Accueil</a>
       <a href="#installation">Installation</a>
       <a href="#buttons">Boutons</a>
       <a href="#toggles">Toggles</a>
@@ -32,17 +31,10 @@
       <a href="#dropdowns">Dropdowns</a>
       <a href="#notifications">Notifications</a>
       <a href="#themes">Thèmes</a>
-      <a href="#faq">FAQ</a>
     </nav>
   </header>
 
   <div class="container">
-
-    <!-- Accueil -->
-    <section id="accueil" class="card">
-      <h1>Bienvenue sur le tutoriel GitanX</h1>
-      <p>GitanX est une librairie UI moderne pour Roblox. Ce site vous guide pas à pas pour l’utiliser en jeu.</p>
-    </section>
 
     <!-- Installation -->
     <section id="installation" class="card">
@@ -51,10 +43,15 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/fsqddsfdqsfd/Site/refs/heads/main/test1.lua"))()
       </pre>
       <button onclick="copyCode('install')">Copier le code</button>
-      <h3>Résultat :</h3>
+      <h3>Résultat complet :</h3>
       <pre>
--- Ce script charge la librairie GitanX
--- Une fenêtre s’ouvre automatiquement avec le thème par défaut
+local GitanX = loadstring(game:HttpGet("https://raw.githubusercontent.com/fsqddsfdqsfd/Site/refs/heads/main/test1.lua"))()
+local UI = GitanX:CreateWindow({
+    Name = "Interface GitanX",
+    Theme = "Default"
+})
+local Tab = UI:CreateTab("Exemple")
+local Section = Tab:CreateSection("Test")
       </pre>
     </section>
 
@@ -67,12 +64,11 @@ Section:CreateButton("Nom du bouton", function()
 end)
       </pre>
       <button onclick="copyCode('button')">Copier le code</button>
-      <h3>Résultat :</h3>
+      <h3>Résultat complet :</h3>
       <pre>
-Section:CreateButton("Dire Bonjour", function()
-    game:GetService("Players").LocalPlayer:Kick("Bonjour depuis GitanX !")
+Section:CreateButton("Boost vitesse", function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
 end)
--- Quand vous cliquez, le joueur est expulsé avec un message
       </pre>
     </section>
 
@@ -89,15 +85,15 @@ Section:CreateToggle("Nom du toggle", function(state)
 end)
       </pre>
       <button onclick="copyCode('toggle')">Copier le code</button>
-      <h3>Résultat :</h3>
+      <h3>Résultat complet :</h3>
       <pre>
-Section:CreateToggle("Mode invisible", function(state)
-    local char = game.Players.LocalPlayer.Character
-    if char then
-        char.Head.Transparency = state and 1 or 0
+Section:CreateToggle("Mode invincible", function(state)
+    local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+    if hum then
+        hum.MaxHealth = state and math.huge or 100
+        hum.Health    = state and math.huge or 100
     end
 end)
--- Active/désactive la transparence de la tête du joueur
       </pre>
     </section>
 
@@ -110,16 +106,12 @@ Section:CreateSlider("Nom du slider", 0, 100, function(val)
 end)
       </pre>
       <button onclick="copyCode('slider')">Copier le code</button>
-      <h3>Résultat :</h3>
+      <h3>Résultat complet :</h3>
       <pre>
-Section:CreateSlider("Taille du joueur", 1, 5, function(val)
-    local char = game.Players.LocalPlayer.Character
-    if char then
-        char:SetPrimaryPartCFrame(char.PrimaryPart.CFrame * CFrame.new(0,0,0) * CFrame.Angles(0,0,0))
-        char.PrimaryPart.Size = Vector3.new(val,val,val)
-    end
+Section:CreateSlider("Vitesse", 16, 120, function(val)
+    local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+    if hum then hum.WalkSpeed = val end
 end)
--- Permet de régler la taille du joueur entre 1 et 5
       </pre>
     </section>
 
@@ -132,12 +124,12 @@ Section:CreateDropdown("Nom du dropdown", {"Option1","Option2","Option3"}, funct
 end)
       </pre>
       <button onclick="copyCode('dropdown')">Copier le code</button>
-      <h3>Résultat :</h3>
+      <h3>Résultat complet :</h3>
       <pre>
-Section:CreateDropdown("Choisir une couleur", {"Rouge","Vert","Bleu"}, function(choice)
-    print("Couleur choisie:", choice)
+Section:CreateDropdown("Choix de vitesse", {"16","50","100"}, function(choice)
+    local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+    if hum then hum.WalkSpeed = tonumber(choice) end
 end)
--- Affiche dans la console la couleur sélectionnée
       </pre>
     </section>
 
@@ -148,10 +140,9 @@ end)
 UI:Notify("Titre", "Message de notification")
       </pre>
       <button onclick="copyCode('notify')">Copier le code</button>
-      <h3>Résultat :</h3>
+      <h3>Résultat complet :</h3>
       <pre>
-UI:Notify("Info", "Bienvenue dans GitanX !")
--- Affiche une notification en jeu
+UI:Notify("Info", "Interface GitanX chargée avec succès !")
       </pre>
     </section>
 
@@ -162,22 +153,27 @@ UI:Notify("Info", "Bienvenue dans GitanX !")
 UI:ChangeTheme("Ocean") -- Thèmes disponibles: Default, Ocean, Amethyst, Light
       </pre>
       <button onclick="copyCode('theme')">Copier le code</button>
-      <h3>Résultat :</h3>
+      <h3>Résultat complet :</h3>
       <pre>
 UI:ChangeTheme("Amethyst")
--- Change le thème de l’interface en violet
       </pre>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="card">
-      <h2>FAQ</h2>
-      <p><b>Q :</b> Comment charger GitanX ?<br><b>R :</b> Avec <code>loadstring(game:HttpGet(...))()</code>.</p>
-      <p><b>Q :</b> Quels contrôles sont disponibles ?<br><b>R :</b> Boutons, Toggles, Sliders, Dropdowns, Notifications, Thèmes.</p>
-      <p><b>Q :</b> Est-ce que ça marche en jeu ?<br><b>R :</b> Oui, GitanX est conçu pour être exécuté directement dans Roblox.</p>
     </section>
 
   </div>
 
   <!-- Notification -->
-  <div id="notif">Code copié
+  <div id="notif">Code copié !</div>
+
+  <script>
+    function copyCode(id){
+      const code = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(code).then(()=>{
+        const notif = document.getElementById("notif");
+        notif.style.display = "block";
+        setTimeout(()=>{ notif.style.display = "none"; },2000);
+      });
+    }
+  </script>
+
+</body>
+</html>
