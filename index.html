@@ -152,6 +152,7 @@
     <a href="#dropdowns">Dropdowns</a>
     <a href="#notifications">Notifications</a>
     <a href="#themes">Thèmes</a>
+    <a href="#script-final">Script final</a>
   </nav>
 </header>
 
@@ -172,7 +173,7 @@ local Library = GitanX:CreateWindow({
     Theme = "Amethyst"
 })
 local TabGameplay = Library:CreateTab("Gameplay")
-local SecActions = TabGameplay:CreateSection("Actions")
+local Section = TabGameplay:CreateSection("Actions")
     </pre>
   </section>
 
@@ -276,7 +277,7 @@ Section:CreateDropdown({
     </pre>
     <button onclick="copyCode('dropdown')">Copier le code</button>
     <h3>Résultat complet :</h3>
-    <pre>
+        <pre>
 Section:CreateDropdown({
     Id = "SpeedChoice",
     Name = "Choix de vitesse",
@@ -322,7 +323,7 @@ Library:ChangeTheme("Ocean") -- Thèmes disponibles: Default, Ocean, Amethyst, L
     <button onclick="copyCode('theme')">Copier le code</button>
     <h3>Résultat complet :</h3>
     <pre>
-local themeDropdown = SecActions:CreateDropdown({
+Section:CreateDropdown({
     Id = "ThemeDropdown",
     Name = "Thème",
     Options = {"Default","Ocean","Amethyst","Light"},
@@ -332,6 +333,101 @@ local themeDropdown = SecActions:CreateDropdown({
     end
 })
     </pre>
+  </section>
+
+  <!-- Script final -->
+  <section id="script-final" class="card">
+    <h2>Script final</h2>
+    <pre id="final">
+local GitanX = loadstring(game:HttpGet("https://raw.githubusercontent.com/fsqddsfdqsfd/Site/refs/heads/main/test1.lua"))()
+
+local Library = GitanX:CreateWindow({
+    Name = "GitanX Menu",
+    Theme = "Amethyst"
+})
+
+local TabGameplay = Library:CreateTab("Gameplay")
+local Section = TabGameplay:CreateSection("Actions")
+
+Section:CreateButton({
+    Name = "Boost vitesse",
+    Callback = function()
+        local hum = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if hum then hum.WalkSpeed = 50 end
+    end
+})
+
+Section:CreateToggle({
+    Id = "InvincibleToggle",
+    Name = "Mode invincible",
+    CurrentValue = false,
+    Callback = function(state)
+        local hum = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if hum then
+            hum.MaxHealth = state and math.huge or 100
+            hum.Health    = state and math.huge or 100
+        end
+    end
+})
+
+Section:CreateSlider({
+    Id = "SpeedSlider",
+    Name = "Vitesse",
+    Range = {16, 120},
+    Increment = 1,
+    CurrentValue = 16,
+    Callback = function(val)
+        local hum = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if hum then hum.WalkSpeed = val end
+    end
+})
+
+Section:CreateDropdown({
+    Id = "SpeedChoice",
+    Name = "Choix de vitesse",
+    Options = {"16","50","100"},
+    CurrentOption = "16",
+    Callback = function(choice)
+        local hum = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if hum then hum.WalkSpeed = tonumber(choice) end
+    end
+})
+
+local TabUI = Library:CreateTab("Interface")
+local SectionUI = TabUI:CreateSection("Réglages")
+
+SectionUI:CreateDropdown({
+    Id = "ThemeDropdown",
+    Name = "Thème",
+    Options = {"Default","Ocean","Amethyst","Light"},
+    CurrentOption = "Amethyst",
+    Callback = function(choice)
+        Library:ChangeTheme(choice)
+    end
+})
+
+SectionUI:CreateKeybind({
+    Id = "ToggleMenuKey",
+    Name = "Raccourci menu",
+    CurrentKey = Enum.KeyCode.RightControl,
+    Callback = function()
+        Library:Notify({
+            Title = "Keybind",
+            Content = "Menu key pressed",
+            Type = "Info",
+            Duration = 2
+        })
+    end
+})
+
+Library:Notify({
+    Title = "GitanX",
+    Content = "Interface chargée avec succès.",
+    Type = "Success",
+    Duration = 3
+})
+    </pre>
+    <button onclick="copyCode('final')">Copier le code</button>
   </section>
 
 </div>
